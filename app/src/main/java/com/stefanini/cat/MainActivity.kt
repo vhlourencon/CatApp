@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
                 for ( image in response) {
                     println(image.link)
                    // binding.marsImag.
-
                 }
         }
 

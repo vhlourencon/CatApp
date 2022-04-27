@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 class MainViewModel() : ViewModel() {
 
      private   var _listaResponse = MutableLiveData<List<Image>>()
-    val listaResponse: LiveData<List<Image>> = _listaResponse
+     val listaResponse: LiveData<List<Image>> = _listaResponse
 
     private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -28,6 +28,7 @@ class MainViewModel() : ViewModel() {
             try {
                 fetchList();
             } catch (e: Exception) {
+                println("erro " + e.message)
                // listaResponse.postValue()
                // _title_1.postValue(e.message)
             }
@@ -39,19 +40,20 @@ class MainViewModel() : ViewModel() {
         val lista = ImgApi.retrofitService.getPhotos()
         val list = mutableListOf<Image>()
         for (photos in lista.data) {
-           for (image in photos.images) {
-               if (image.type.contains("image")){
-                   //_listaResponse.postValue(photos.images);
-                   list.add(image);
-                   break
-               }
-           }
+            if( photos.images != null) {
+                for (image in photos.images!!) {
+                    if (image.type.contains("image")) {
+                        //_listaResponse.postValue(photos.images);
+                        list.add(image);
+                        break
+                    }
+                }
+            }
        }
         _listaResponse.postValue(list);
-
-
-
     }
+
+
 
 }
 
