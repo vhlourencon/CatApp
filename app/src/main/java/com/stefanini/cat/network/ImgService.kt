@@ -25,6 +25,6 @@ object ImgApi {
 
 interface ImgService {
     @Headers("Authorization: Client-ID 1ceddedc03a5d71")
-    @GET("search/?q_all=cat")
+    @GET("search/?q_all=cat&q_type=jpg")
     suspend fun getPhotos(): Response
 }
